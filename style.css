@@ -42,6 +42,9 @@ code{
     box-sizing: border-box;
     overflow-x: auto;
 }
+code a{
+    color: inherit;
+}
 .tag-name {
     color: #e06c75;
 }
