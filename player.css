@@ -1,4 +1,4 @@
-.player {
+ocho {
     font-family: system-ui, -apple-system, 
     BlinkMacSystemFont, 'Segoe UI', 
     Roboto, Oxygen, Ubuntu, Cantarell, 
@@ -14,26 +14,26 @@
     margin-inline: auto;
     background: #000000dd;
 }
-.player *{
+ocho *{
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 
-.player.fullscreen,
-.player.cinema {
+ocho.fullscreen,
+ocho.cinema {
     max-width: initial;
     width: 100%;
     transition: 150ms ease-in-out;
     border-radius: 0;
 }
 
-.player.cinema {
+ocho.cinema {
     max-height: 80vh;
 }
 
-.player.fullscreen {
+ocho.fullscreen {
     max-height: 100vh;
 }
 .light {
@@ -52,18 +52,18 @@
     transition: 0.5s;
     z-index: -1;
 }
-.player video {
+ocho video {
     width: 100%;
     border-radius: inherit;
 }
 
-.player.cinema video {
+ocho.cinema video {
     height: 100%;
     max-width: 850px;
     border-radius: inherit;
 }
 
-.player.fullscreen video {
+ocho.fullscreen video {
     max-width: initial;
     max-height: 100%;
     width: 100%;
@@ -94,9 +94,9 @@
     border-radius: inherit;
 }
 
-.player:hover .video-controls-container,
-.player:focus-within .video-controls-container,
-.player.paused .video-controls-container {
+ocho:hover .video-controls-container,
+ocho:focus-within .video-controls-container,
+ocho.paused .video-controls-container {
     opacity: 1;
 }
 
@@ -114,9 +114,9 @@ video::cue {
     user-select: none;
 }
 
-.player:hover .caption-text,
-.player:focus-within .caption-text,
-.player.paused .caption-text {
+ocho:hover .caption-text,
+ocho:focus-within .caption-text,
+ocho.paused .caption-text {
     bottom: 60px;
 }
 
@@ -665,7 +665,7 @@ video::cue {
 }
 
 @media (max-width:400px) {
-    .player {
+    ocho {
         width: 100%;
         border-radius: 0;
     }
