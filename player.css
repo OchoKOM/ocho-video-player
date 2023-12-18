@@ -157,6 +157,7 @@ ocho.paused .caption-text {
     padding: 0.25rem;
     align-items: center;
     overflow: hidden;
+    width: 100%;
 }
 
 .video-controls-container .controls button {
