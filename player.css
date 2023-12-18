@@ -14,6 +14,12 @@
     margin-inline: auto;
     background: #000000dd;
 }
+.player *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 
 .player.fullscreen,
 .player.cinema {
