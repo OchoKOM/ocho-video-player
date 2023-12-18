@@ -33,7 +33,7 @@ code{
     word-break: break-all;
     width: 100%;
     box-sizing: border-box;
-    overflow-x: scroll;
+    overflow-x: auto;
 }
 .tag-name {
     color: #e06c75;
