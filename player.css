@@ -22,7 +22,9 @@ ocho *{
 }
 
 
+ocho.fullscreen,
 .player.fullscreen,
+ocho.cinema,
 .player.cinema {
     max-width: initial;
     width: 100%;
@@ -30,10 +32,11 @@ ocho *{
     border-radius: 0;
 }
 
+ocho.cinema,
 .player.cinema {
     max-height: 80vh;
 }
-
+ocho.fullscreen,
 .player.fullscreen {
     max-height: 100vh;
 }
