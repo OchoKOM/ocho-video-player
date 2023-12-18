@@ -317,8 +317,10 @@ async function video_player() {
     </symbol>
   </svg>
     `
-    let style_sheet = '<link rel="stylesheet" href="https://ochokom.github.io/ocho-video-player/player.css">'
-  document.head.innerHTML += style_sheet;
+    let style_sheet = document.createElement('link');
+    style_sheet.rel = 'stylesheet';
+    style_sheet.href = 'https://ochokom.github.io/ocho-video-player/player.css';
+  document.head.prepend(style_sheet);
   document.body.innerHTML += player_svgs;
   await new Promise((resolve, reject) => {
     let ocho_player = document.querySelectorAll('ocho');
