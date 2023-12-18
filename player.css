@@ -40,7 +40,22 @@ body {
 .player.fullscreen {
     max-height: 100vh;
 }
-
+.light {
+    position: absolute;
+    margin: auto;
+    inset: 0;
+    border-radius: inherit;
+    box-shadow: var(--hx) 0px 0px 100px;
+    filter: brightness(200%);
+    background: var(--hx);
+    opacity: 0.5;
+    width: 100%;
+    max-width: 850px;
+    max-height: 80vh;
+    aspect-ratio: var(--ratio);
+    transition: 0.5s;
+    z-index: -1;
+}
 .player video {
     width: 100%;
     border-radius: inherit;
