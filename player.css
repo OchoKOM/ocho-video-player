@@ -55,6 +55,7 @@ ocho *{
 ocho video {
     width: 100%;
     border-radius: inherit;
+    transition: 150ms ease-in-out;
 }
 
 ocho.cinema video {
