@@ -13,6 +13,7 @@ ocho {
     justify-content: center;
     margin-inline: auto;
     background: #000000dd;
+    transition: 150ms ease-in-out;
 }
 ocho *{
     margin: 0;
