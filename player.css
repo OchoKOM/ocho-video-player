@@ -21,19 +21,19 @@ ocho *{
 }
 
 
-ocho.fullscreen,
-ocho.cinema {
+.player.fullscreen,
+.player.cinema {
     max-width: initial;
     width: 100%;
     transition: 150ms ease-in-out;
     border-radius: 0;
 }
 
-ocho.cinema {
+.player.cinema {
     max-height: 80vh;
 }
 
-ocho.fullscreen {
+.player.fullscreen {
     max-height: 100vh;
 }
 .light {
