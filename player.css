@@ -234,6 +234,7 @@ ocho.paused .caption-text {
     cursor: pointer;
     display: flex;
     align-items: center;
+    min-width: calc(100% - 1rem);
 }
 
 .timeline {
