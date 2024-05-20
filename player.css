@@ -7,7 +7,7 @@ ocho {
     position: relative;
     background: #80808062;
     width: 90%;
-    max-width: 850px;
+    min-width: 150px;
     border-radius: 10px;
     display: flex;
     justify-content: center;
@@ -225,6 +225,7 @@ ocho.paused .caption-text {
     align-items: center;
     gap: 0.25rem;
     flex-grow: 1;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -244,6 +245,7 @@ ocho.paused .caption-text {
     position: relative;
     transition: 50ms ease-in-out;
     border-radius: 2px;
+    -webkit-user-select: none;
     user-select: none;
 }
 
@@ -317,6 +319,7 @@ ocho.paused .caption-text {
     border-radius: 3px;
     right: calc(100% - (var(--preview-position) * 100%));
     transform: translate(calc(50% + var(--overflow-pos)));
+    -webkit-user-select: none;
     user-select: none;
     pointer-events: none;
     opacity: 0;
