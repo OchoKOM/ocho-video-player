@@ -17,6 +17,7 @@ async function video_player() {
       ocho.getAttribute('autoplay') ? video.setAttribute('autoplay', true) : video.removeAttribute('autoplay');
       video.setAttribute('size', ocho_size)
       video.src = ocho.getAttribute('src') ? ocho.getAttribute('src') : '';
+      video.poster = ocho.getAttribute('poster') ? ocho.getAttribute('poster') : '';
       let sources = ocho.querySelectorAll('source');
       let tracks = ocho.querySelectorAll('track');
       ocho.innerHTML = '';
