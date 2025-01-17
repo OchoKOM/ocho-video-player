@@ -758,4 +758,9 @@ video::cue {
   .video-controls-container .settings-menu .desktop-item {
     display: none;
   }
+  .settings-menu {
+    inset: auto;
+    right: 0;
+    top: -3rem;
+  }
 }
