@@ -394,9 +394,10 @@ export const player_svgs = `
   </svg>
     `;
 
-class OchoPlayer extends HTMLDivElement {
+class OchoPlayer extends HTMLElement {
   constructor() {
     super();
+    this.style.display = "block";
     this.attachShadow({ mode: "open" }); // Utiliser le Shadow DOM pour encapsuler le style et le HTML
   }
 
