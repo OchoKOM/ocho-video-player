@@ -44,7 +44,11 @@ export const player_controls = `
       <span>/</span>
       <span class="total-time">-</span>
     </div>
-    <div class="auto-play desktop-item"></div>
+    <div class="auto-play desktop-item">
+      <span>
+        <svg fill="currentColor" height="16"><use xlink:href="#pause-icon-fill"></use></svg>
+      </span>
+    </div>
     <button class="caption-btn desktop-item">
       <svg fill="currentColor" height="24">
         <use xlink:href="#subtitle-icon"></use>
@@ -517,7 +521,7 @@ class OchoPlayer extends HTMLElement {
     function play_video() {
       container.classList.remove("paused");
       // Change the play icon xlink:href
-      play_pause_icon.innerHTML = play_pause_svg["pause"];
+      play_pause_icon.innerHTML = play_pause_svg.pause;
       // Change the play icon title
       play_pause_icon.title = video.paused ? "Lire(k)" : "Pause(k)";
       // Change the video state
@@ -530,7 +534,7 @@ class OchoPlayer extends HTMLElement {
     function pause_video() {
       container.classList.add("paused");
       // Change the play icon xlink:href
-      play_pause_icon.innerHTML = play_pause_svg["play"];
+      play_pause_icon.innerHTML = play_pause_svg.play;
       // Change the play icon title
       play_pause_icon.title = video.paused ? "Lire(k)" : "Pause(k)";
       // Change the video state
@@ -722,23 +726,30 @@ class OchoPlayer extends HTMLElement {
     // ! autoplay
     function auto_play_get() {
       const saved_autoplay = sessionStorage.getItem("auto-play");
-      video.autoplay = saved_autoplay ? true : false;
-      saved_autoplay
+      video.autoplay = !!saved_autoplay;
+      video.autoplay
         ? auto_play.classList.add("active")
         : auto_play.classList.remove("active");
+      change_autoplay_btn(video.autoplay)
+    }
+    function change_autoplay_btn(state = false) {
+      auto_play.querySelector("svg").innerHTML = state
+        ? play_pause_svg.play
+        : play_pause_svg.pause;
     }
     auto_play_get();
     auto_play.addEventListener("click", toggle_autoplay);
     function toggle_autoplay() {
       auto_play.classList.toggle("active");
       video.autoplay = auto_play.classList.contains("active");
+      change_autoplay_btn(video.autoplay);
       save_autoplay();
       settings_btn.classList.contains("active") && remove_settings();
     }
     function save_autoplay() {
       // Sauvearder les preferences de lecture automatique ici
       auto_play.classList.contains("active")
-        ? sessionStorage.setItem("auto-play", "on")
+        ? sessionStorage.setItem("auto-play", true)
         : sessionStorage.removeItem("auto-play");
     }
 
