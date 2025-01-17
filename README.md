@@ -44,18 +44,17 @@ Notre lecteur vidéo HTML custom est une solution légère et performante pour i
 </head>
 <body>
     <!-- Intégration du lecteur vidéo -->
-        <!-- Remplacer "votre-video.mp4" par le chemin vers votre video 
-        et size par la resolution de votre video -->
-        <ocho src="votre-video.mp4" size="720">
-            <!-- Ajoutre des sources de differente qualilté 
-            et remplacer size par la resolution de votre nouvelle source  -->
-            <!-- <source src="votre-video_1080.mp4" size="1080"> -->
-            <!-- Ajouter des sous-titres et remplacer fr par le code iso de votre langue 
-            Remplacer "votre-sous-titre.vtt" par le chemin vers votre fichier vtt -->
-            <!-- <track kind="subtitles" label="French" srclang="fr" src="votre-sous-titre.vtt">-->
-        </ocho>
-
-    <script src="https://ochokom.github.io/ocho-video-player/video-player.js"></script>
+        <!-- Remplacer "votre-video.mp4" par le chemin vers votre vidéo et size par la résolution de votre vidéo -->
+            <ocho-player src="votre-video.mp4" size="720">
+                <!-- Ajouter des sources de différente qualité et remplacer size par la résolution de votre nouvelle source -->
+                <!-- <source src="votre-video_1080.mp4" size="1080">; -->
+            
+                <!-- Ajouter des sous-titres et remplacer fr par le code iso de votre langue Remplacer "votre-sous-titre.vtt" par le chemin vers votre fichier vtt -->
+                <!-- <track kind="subtitles" label="French" srclang="fr" src="votre-sous-titre.vtt">;-->
+            </ocho-player>
+                
+            <!-- Liez la page au script de type module -->
+    <script type="module" src="https://ochokom.github.io/ocho-video-player/js/player.js"></script>
 </body>
 </html>
 ```

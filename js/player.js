@@ -433,11 +433,11 @@ class OchoPlayer extends HTMLElement {
     const style_src =
       location.hostname !== "ochokom.github.io"
         ? "https://ochokom.github.io/ocho-video-player/player.css"
-        : "player.css";
+        : "./player.css";
 
     // Ajouter le tout au Shadow DOM
     container.innerHTML = `
-          <link rel="stylesheet" href="player.css">
+          <link rel="stylesheet" href="${style_src}">
           ${player_controls}
           ${player_svgs}
         `;
@@ -789,7 +789,7 @@ class OchoPlayer extends HTMLElement {
     // ! Settings
     // activer la section des parametres
     settings_btn.addEventListener("click", toggle_settings);
-    // window.addEventListener("blur", remove_settings);
+    window.addEventListener("blur", remove_settings);
     function toggle_settings() {
       settings_btn.classList.toggle("active");
       settings_menu.classList.toggle("active");
