@@ -7,7 +7,7 @@
     <title>Ocho Video Player</title>
     <link rel="stylesheet" href="player.css">
     <link rel="stylesheet" href="style.css">
-    <link rel="shortcut icon" href="https://ochokom.github.io/videos-ocho/profil.jpg" type="image/x-icon">
+    <link rel="shortcut icon" href="favicon.svg" type="image/x-icon">
     <meta name="description"
         content="Notre lecteur vidéo HTML est une solution légère et performante pour intégrer la lecture de vidéos sur votre site web">
 </head>
@@ -61,10 +61,11 @@
     
 <span class="comment tag">&lt;!-- Liez la page au script de type module --&gt;</span>
 <span class="tag">&lt;<span class="tag-name">script</span> <span class="attribute">type</span>=<span class="value">"module"</span> <span class="attribute">src</span>=<span class="value">"<a 
-    href="https://ochokom.github.io/ocho-video-player/video-player.js" target="_blank">https://ochokom.github.io/ocho-video-player/video-player.js</a>"</span>&gt;</span><span class="tag">&lt;/<span class="tag-name">script</span>&gt;</span></code>
+    href="https://ochokom.github.io/ocho-video-player/js/player.js" target="_blank" rel="noopener noreferrer">https://ochokom.github.io/ocho-video-player/js/player.js</a>"</span>&gt;</span><span class="tag">&lt;/<span class="tag-name">script</span>&gt;</span></code>
 </pre>
     <h2>Exemple d'Utilisation</h2>
-    <ocho src="vid.mp4" size="1080" autoplay poster="./poster.png"></ocho>
+    <!-- <ocho src="vid.mp4" size="1080" autoplay poster="./poster.png"></ocho> -->
+    <ocho-player src="vid.mp4" size="1080" autoplay poster="./poster.webp"></ocho-player>
 
     <h2>Contribution</h2>
     <p>Les contributions sont les bienvenues. N'hésitez pas à ouvrir une issue pour discuter des fonctionnalités
