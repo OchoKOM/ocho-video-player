@@ -770,9 +770,10 @@ class OchoPlayer extends HTMLElement {
     const src = this.getAttribute("src") ? this.getAttribute("src") : "";
     const deviceType = detectDeviceType();
     const isMobile =
-      (!this.hasAttribute("mobile-disabled")) && (this.hasAttribute("mobile") ||
-      deviceType === "mobile" ||
-      deviceType === "tablet");
+      !this.hasAttribute("mobile-disabled") &&
+      (this.hasAttribute("mobile") ||
+        deviceType === "mobile" ||
+        deviceType === "tablet");
 
     const container = document.createElement("div");
     const ocho_player = this;
@@ -799,9 +800,10 @@ class OchoPlayer extends HTMLElement {
       video.appendChild(track);
     });
     const stylesheet = isMobile ? "mobile-player.css" : "player.css";
-    const style_src = !(location.hostname !== "ochokom.github.io")
-      ? `https://ochokom.github.io/ocho-video-player/${stylesheet}`
-      : `./${stylesheet}`;
+    const style_src =
+      location.hostname !== "ochokom.github.io"
+        ? `https://ochokom.github.io/ocho-video-player/${stylesheet}`
+        : `./${stylesheet}`;
     player.appendChild(container);
 
     // Ajouter le tout au Shadow DOM
@@ -909,7 +911,10 @@ class OchoPlayer extends HTMLElement {
         // Ajouter un écouteur d'événement pour détecter les changements d'orientation
         screen.orientation.addEventListener("change", (e) => {
           if (e.srcElement.type.startsWith("landscape")) {
-            if (document.fullscreenElement === null && document.querySelectorAll("ocho-player").length === 1) {
+            if (
+              document.fullscreenElement === null &&
+              document.querySelectorAll("ocho-player").length === 1
+            ) {
               toggle_fullscreen_mode();
               screen.orientation.addEventListener("change", (e) => {
                 if (e.srcElement.type.startsWith("portrait")) {
