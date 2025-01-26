@@ -210,4 +210,4 @@ Notre projet de lecteur vidéo HTML custom représente une approche minimaliste 
 
 ---
 
-Copyright &copy; 2023 OchoKOM. Designed by **Martin Ocho**.
+Copyright &copy; 2025 OchoKOM. Designed by **Martin Ocho**.
