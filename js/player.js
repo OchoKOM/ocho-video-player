@@ -927,12 +927,12 @@ class OchoPlayer extends HTMLElement {
           }
           container.addEventListener("fullscreenchange", () => {
             if ("orientation" in screen && "lock" in screen.orientation) {
-              screen.orientation.unlock();
               // L'appareil prend en charge le changement de l'orientation verrouillée
               if (document.fullscreenElement !== null) {
                 screen.orientation.lock("landscape");
               } else {
                 screen.orientation.lock("portrait");
+                screen.orientation.unlock();
               }
             } else {
               // L'appareil ne prend pas en charge le changement de l'orientation verrouillée
