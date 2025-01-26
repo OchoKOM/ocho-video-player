@@ -48,38 +48,173 @@
         <li>Personnalisez l'apparence et le comportement en modifiant le code selon vos besoins spécifiques.</li>
         <li>Profitez d'une intégration légère et flexible de la lecture vidéo sur votre site web.</li>
     </ol>
-    <h2>Exemple d'Intégration</h2>
-    <pre contenteditable spellcheck="false">
-        <code class="code"><span class="comment tag">&lt;!-- Remplacer "votre-video.mp4" par le chemin vers votre vidéo et size par la résolution de votre vidéo --&gt;</span>
-<span class="tag">&lt;<span class="tag-name">ocho-player</span> <span class="attribute">src</span>=<span class="value">"votre-video.mp4"</span> <span class="attribute">size</span>=<span class="value">"720"</span>&gt;</span>
-    <span class="tag comment">&lt;!-- Ajouter des sources de différente qualité et remplacer size par la résolution de votre nouvelle source --&gt;</span>
-    <span class="tag comment">&lt;!-- <span class="tag">&lt;source src="votre-video_1080.mp4" size="1080"&gt;</span>; --&gt;</span>
-  
-    <span class="comment tag">&lt;!-- Ajouter des sous-titres et remplacer fr par le code iso de votre langue Remplacer "votre-sous-titre.vtt" par le chemin vers votre fichier vtt --&gt;</span>
-    <span class="comment tag">&lt;!-- <span class="tag">&lt;track kind="subtitles" label="French" srclang="fr" src="votre-sous-titre.vtt"&gt;</span>;--&gt;</span>
-<span class="tag">&lt;/<span class="tag-name">ocho-player</span>&gt;</span>
+
+    <h2>Intégration (installation)</h2>
+    <pre>
+        <code class="code"><span class="comment tag">&lt;!-- Ajouter des balises ocho-player à votre code --&gt;</span>
+<span class="tag">&lt;<span class="tag-name">ocho-player</span> <span class="attribute">src</span>=<span class="value">"votre-video.mp4"</span> <span class="attribute">size</span>=<span class="value">"720"</span>&gt;</span><span class="tag">&lt;/<span class="tag-name">ocho-player</span>&gt;</span>
     
 <span class="comment tag">&lt;!-- Liez la page au script de type module --&gt;</span>
 <span class="tag">&lt;<span class="tag-name">script</span> <span class="attribute">type</span>=<span class="value">"module"</span> <span class="attribute">src</span>=<span class="value">"<a 
     href="https://ochokom.github.io/ocho-video-player/js/player.js" target="_blank" rel="noopener noreferrer">https://ochokom.github.io/ocho-video-player/js/player.js</a>"</span>&gt;</span><span class="tag">&lt;/<span class="tag-name">script</span>&gt;</span></code>
-</pre>
-    <h2>Exemple d'Utilisation</h2>
-    <!-- <ocho src="vid.mp4" size="1080" autoplay poster="./poster.png"></ocho> -->
+    </pre>
+
+    <h2>Résultat</h2>
     <ocho-player src="vid.mp4" size="1080" autoplay poster="./poster.webp"></ocho-player>
+
+    <h2>Cas d'Utilisation</h2>
+
+    <h3>1. Lecture de Vidéos Locales ou en Ligne</h3>
+    <p><strong>Instructions :</strong> Utilisez l'attribut <code>src</code> pour spécifier le chemin de la vidéo.</p>
+    <pre>
+<code class="code"><span class="tag">&lt;<span class="tag-name">ocho-player</span> <span class="attribute">src</span>=<span class="value">"video.mp4"</span>&gt;</span><span class="tag">&lt;/<span class="tag-name">ocho-player</span>&gt;</span></code>
+    </pre>
+
+    <h3>2. Lecture de Vidéos YouTube</h3>
+    <p><strong>Instructions :</strong> Passez l'URL YouTube dans l'attribut <code>src</code>.</p>
+    <pre>
+<code class="code"><span class="tag">&lt;<span class="tag-name">ocho-player</span> <span class="attribute">src</span>=<span class="value">"https://www.youtube.com/watch?v=ABCD1234"</span>&gt;</span><span class="tag">&lt;/<span class="tag-name">ocho-player</span>&gt;</span></code>
+    </pre>
+
+    <h3>3. Affichage d'une Image de Prévisualisation</h3>
+    <p><strong>Instructions :</strong> Ajoutez l'attribut <code>poster</code> avec le chemin de l'image.</p>
+    <pre>
+<code class="code"><span class="tag">&lt;<span class="tag-name">ocho-player</span> <span class="attribute">src</span>=<span class="value">"video.mp4"</span> <span class="attribute">poster</span>=<span class="value">"preview.jpg"</span>&gt;</span><span class="tag">&lt;/<span class="tag-name">ocho-player</span>&gt;</span></code>
+    </pre>
+
+    <h3>4. Lecture Automatique (Autoplay)</h3>
+    <p><strong>Instructions :</strong> Ajoutez l'attribut <code>autoplay</code> pour démarrer la lecture
+        automatiquement.</p>
+    <pre>
+<code class="code"><span class="tag">&lt;<span class="tag-name">ocho-player</span> <span class="attribute">src</span>=<span class="value">"video.mp4"</span> <span class="attribute">autoplay</span>&gt;</span><span class="tag">&lt;/<span class="tag-name">ocho-player</span>&gt;</span></code>
+    </pre>
+
+    <h3>5. Gestion des Sources Multiples</h3>
+    <p><strong>Instructions :</strong> Ajoutez plusieurs balises <code>&lt;source&gt;</code> pour différentes
+        résolutions.</p>
+    <pre>
+<code class="code"><span class="tag">&lt;<span class="tag-name">ocho-player</span> <span class="attribute">size</span>=<span class="value">"720"</span>&gt;</span>
+    <span class="tag">&lt;<span class="tag-name">source</span> <span class="attribute">src</span>=<span class="value">"video_720.mp4"</span> <span class="attribute">size</span>=<span class="value">"720"</span>&gt;</span>
+    <span class="tag">&lt;<span class="tag-name">source</span> <span class="attribute">src</span>=<span class="value">"video_1080.mp4"</span> <span class="attribute">size</span>=<span class="value">"1080"</span>&gt;</span>
+<span class="tag">&lt;/<span class="tag-name">ocho-player</span>&gt;</span></code>
+    </pre>
+
+    <h3>6. Ajout de Sous-Titres</h3>
+    <p><strong>Instructions :</strong> Utilisez la balise <code>&lt;track&gt;</code> pour ajouter des fichiers VTT.</p>
+    <pre>
+<code class="code"><span class="tag">&lt;<span class="tag-name">ocho-player</span> <span class="attribute">src</span>=<span class="value">"video.mp4"</span>&gt;</span>
+    <span class="tag">&lt;<span class="tag-name">track</span> <span class="attribute">kind</span>=<span class="value">"subtitles"</span> <span class="attribute">label</span>=<span class="value">"Français"</span> <span class="attribute">srclang</span>=<span class="value">"fr"</span> <span class="attribute">src</span>=<span class="value">"sous-titres-fr.vtt"</span>&gt;</span>
+    <span class="tag">&lt;<span class="tag-name">track</span> <span class="attribute">kind</span>=<span class="value">"subtitles"</span> <span class="attribute">label</span>=<span class="value">"English"</span> <span class="attribute">srclang</span>=<span class="value">"en"</span> <span class="attribute">src</span>=<span class="value">"sous-titres-en.vtt"</span>&gt;</span>
+<span class="tag">&lt;/<span class="tag-name">ocho-player</span>&gt;</span></code>
+    </pre>
+
+    <h3>7. Mode Mobile Optimisé</h3>
+    <p><strong>Instructions :</strong> Ajoutez l'attribut <code>mobile</code> pour activer le mode mobile.</p>
+    <pre>
+<code class="code"><span class="tag">&lt;<span class="tag-name">ocho-player</span> <span class="attribute">src</span>=<span class="value">"video.mp4"</span> <span class="attribute">mobile</span>&gt;</span><span class="tag">&lt;/<span class="tag-name">ocho-player</span>&gt;</span></code>
+    </pre>
+
+    <h3>8. Désactivation du Mode Mobile</h3>
+    <p><strong>Instructions :</strong> Ajoutez l'attribut <code>mobile-disabled</code> pour désactiver le mode mobile.
+    </p>
+    <pre>
+<code class="code"><span class="tag">&lt;<span class="tag-name">ocho-player</span> <span class="attribute">src</span>=<span class="value">"video.mp4"</span> <span class="attribute">mobile-disabled</span>&gt;</span><span class="tag">&lt;/<span class="tag-name">ocho-player</span>&gt;</span></code>
+    </pre>
+
+    <h3>9. Gestion des Qualités Vidéo</h3>
+    <p><strong>Instructions :</strong> Utilisez plusieurs balises <code>&lt;source&gt;</code> avec l'attribut
+        <code>size</code>.
+    </p>
+    <pre>
+<code class="code"><span class="tag">&lt;<span class="tag-name">ocho-player</span> <span class="attribute">size</span>=<span class="value">"720"</span>&gt;</span>
+    <span class="tag">&lt;<span class="tag-name">source</span> <span class="attribute">src</span>=<span class="value">"video_360.mp4"</span> <span class="attribute">size</span>=<span class="value">"360"</span>&gt;</span>
+    <span class="tag">&lt;<span class="tag-name">source</span> <span class="attribute">src</span>=<span class="value">"video_720.mp4"</span> <span class="attribute">size</span>=<span class="value">"720"</span>&gt;</span>
+<span class="tag">&lt;/<span class="tag-name">ocho-player</span>&gt;</span></code>
+    </pre>
+
+    <h3>10. Gestion des Sous-Titres</h3>
+    <p><strong>Instructions :</strong> Ajoutez des fichiers VTT avec la balise <code>&lt;track&gt;</code>.</p>
+    <pre>
+<code class="code"><span class="tag">&lt;<span class="tag-name">ocho-player</span> <span class="attribute">src</span>=<span class="value">"video.mp4"</span>&gt;</span>
+    <span class="tag">&lt;<span class="tag-name">track</span> <span class="attribute">kind</span>=<span class="value">"subtitles"</span> <span class="attribute">label</span>=<span class="value">"Français"</span> <span class="attribute">srclang</span>=<span class="value">"fr"</span> <span class="attribute">src</span>=<span class="value">"subs_fr.vtt"</span>&gt;</span>
+    <span class="tag">&lt;<span class="tag-name">track</span> <span class="attribute">kind</span>=<span class="value">"subtitles"</span> <span class="attribute">label</span>=<span class="value">"English"</span> <span class="attribute">srclang</span>=<span class="value">"en"</span> <span class="attribute">src</span>=<span class="value">"subs_en.vtt"</span>&gt;</span>
+<span class="tag">&lt;/<span class="tag-name">ocho-player</span>&gt;</span></code>
+    </pre>
+    <h3>11. Personnalisation CSS</h3>
+    <p><strong>Instructions :</strong> Modifiez les fichiers <code>player.css</code> et <code>mobile-player.css</code>
+        pour personnaliser l'apparence.</p>
+    <pre>
+<code class="code"><span class="comment tag">&lt;!-- Modifier les fichiers player.css et mobile-player.css --&gt;</span>
+<span class="tag">&lt;<span class="tag-name">link</span> <span class="attribute">rel</span>=<span class="value">"stylesheet"</span> <span class="attribute">href</span>=<span class="value">"custom-player.css"</span>&gt;</span></code>
+    </pre>
+
+    <h3>12. Contrôles de Lecture</h3>
+    <h4>Instructions </h4>
+    <ol>
+        <li>
+            <p><strong>Lecture en boucle :</strong> Ajoutez l'attribut <code>loop</code> pour activer la lecture en
+                boucle par defaut.</p>
+            <pre>
+<code class="code"><span class="tag">&lt;<span class="tag-name">ocho-player</span> <span class="attribute">src</span>=<span class="value">"video.mp4"</span> <span class="attribute">loop</span>&gt;</span><span class="tag">&lt;/<span class="tag-name">ocho-player</span>&gt;</span></code>
+    </pre>
+        </li>
+        <li>
+            <p><strong>Affichage :</strong> Les contrôles sont activés, au survol de la souris, au click du lecteur ou
+                pendant que la video est en pause ou ne peut être lue.</p>
+        </li>
+        <li>
+            <p><strong>Vitesses de Lecture :</strong> Utiliserle menu des parametres dans l'interface pour ajuster la
+                vitesse.</p>
+        </li>
+        <li>
+            <p><strong>Raccourcis clavier :</strong>Vous pouvez utiliser les raccourcis clavier pour contrôler la
+                lecture</p>
+            <ul>
+                <li>
+                    <p><strong>Lecture/pause :</strong> Cliquez sur le bouton dédié ou utilisez le raccourci clavier (K
+                        ou espace)</p>
+                </li>
+                <li>
+                    <p><strong>Mode Picture-in-Picture (Image reduit) :</strong> Cliquez sur le bouton dédié ou utilisez
+                        le raccourci clavier (I)</p>
+                </li>
+                <li>
+                    <p><strong>Mode Cinéma :</strong> Cliquez sur le bouton dédié ou utilisez le raccourci clavier (T)
+                    </p>
+                </li>
+                <li>
+                    <p><strong>Plein écran :</strong> Cliquez sur le bouton dédié ou utilisez le raccourci clavier (F)
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <p><strong>Contrôles tactiles :</strong> Les contrôles tactiles sont activés automatiquement sur les
+                appareils mobiles.</p>
+        </li>
+        <li>
+            <p><strong>Paramètres avancés :</strong> Cliquez sur le bouton dédié pour accéder aux options avancées dans
+                l'interface</p>
+        </li>
+    </ol>
 
     <h2>Contribution</h2>
     <p>Les contributions sont les bienvenues. N'hésitez pas à ouvrir une issue pour discuter des fonctionnalités
         proposées ou à soumettre une pull request pour corriger des bugs.</p>
 
     <h3>Comment Contribuer</h3>
-    <ol>
-        <li>Fork le projet.</li>
-        <li>Créez une nouvelle branche pour votre fonctionnalité
-            (<code>git checkout -b feature/nouvelle-fonctionnalite</code>).</li>
-        <li>Committez vos modifications (<code>git commit -am 'Ajouter une nouvelle fonctionnalité'</code>).</li>
-        <li>Poussez la branche sur votre fork (<code>git push origin feature/nouvelle-fonctionnalite</code>).</li>
-        <li>Ouvrez une pull request.</li>
-    </ol>
+    <div>
+        <ol>
+            <li>Fork le projet.</li>
+            <li>Créez une nouvelle branche pour votre fonctionnalité
+                (<code>git checkout -b feature/nouvelle-fonctionnalite</code>).</li>
+            <li>Committez vos modifications (<code contenteditable
+                    spellcheck="false">git commit -am 'Ajouter une nouvelle fonctionnalité'</code>).</li>
+            <li>Poussez la branche sur votre fork (<code contenteditable
+                    spellcheck="false">git push origin feature/nouvelle-fonctionnalite</code>).</li>
+            <li>Ouvrez une pull request.</li>
+        </ol>
+    </div>
 
     <h3>Guidelines de Contribution</h3>
     <ul class="list">
@@ -106,10 +241,81 @@
                 offrant ainsi une flexibilité totale et une intégration transparente dans divers environnements web.
             </p>
         </div>
+        <div class="socials">
+            <a href="https://youtube.com/@ochokom" target="_blank" rel="noopener noreferrer"><button
+                    class="user-btn youtube">
+                    <div class="icon">
+                        <svg fill="#fffcfd" width="24" height="24" viewBox="0 0 32 32">
+                            <title>youtube</title>
+                            <path
+                                d="M12.932 20.459v-8.917l7.839 4.459zM30.368 8.735c-0.354-1.301-1.354-2.307-2.625-2.663l-0.027-0.006c-3.193-0.406-6.886-0.638-10.634-0.638-0.381 0-0.761 0.002-1.14 0.007l0.058-0.001c-0.322-0.004-0.701-0.007-1.082-0.007-3.748 0-7.443 0.232-11.070 0.681l0.434-0.044c-1.297 0.363-2.297 1.368-2.644 2.643l-0.006 0.026c-0.4 2.109-0.628 4.536-0.628 7.016 0 0.088 0 0.176 0.001 0.263l-0-0.014c-0 0.074-0.001 0.162-0.001 0.25 0 2.48 0.229 4.906 0.666 7.259l-0.038-0.244c0.354 1.301 1.354 2.307 2.625 2.663l0.027 0.006c3.193 0.406 6.886 0.638 10.634 0.638 0.38 0 0.76-0.002 1.14-0.007l-0.058 0.001c0.322 0.004 0.702 0.007 1.082 0.007 3.749 0 7.443-0.232 11.070-0.681l-0.434 0.044c1.298-0.362 2.298-1.368 2.646-2.643l0.006-0.026c0.399-2.109 0.627-4.536 0.627-7.015 0-0.088-0-0.176-0.001-0.263l0 0.013c0-0.074 0.001-0.162 0.001-0.25 0-2.48-0.229-4.906-0.666-7.259l0.038 0.244z">
+                            </path>
+                        </svg>
+                    </div>
+                    <span class="text">Youtube</span>
+                </button></a>
+            <a href="https://github.com/OchoKOM/" target="_blank" rel="noopener noreferrer">
+                <button class="user-btn github">
+                    <div class="icon">
+                        <svg width="24" height="24" viewBox="0 0 96 96">
+                            <path fill-rule="evenodd" clip-rule="evenodd"
+                                d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+                                fill="#fff"></path>
+                        </svg>
+                    </div>
+                    <span class="text">GitHub</span>
+                </button></a>
+            <a href="https://facebook.com/ochokom" target="_blank" rel="noopener noreferrer"><button
+                    class="user-btn facebook">
+                    <div class="icon">
+                        <svg width="24" height="24" viewBox="0 0 50 50">
+                            <path fill="#fff"
+                                d="M25,3C12.85,3,3,12.85,3,25c0,11.03,8.125,20.137,18.712,21.728V30.831h-5.443v-5.783h5.443v-3.848 c0-6.371,3.104-9.168,8.399-9.168c2.536,0,3.877,0.188,4.512,0.274v5.048h-3.612c-2.248,0-3.033,2.131-3.033,4.533v3.161h6.588 l-0.894,5.783h-5.694v15.944C38.716,45.318,47,36.137,47,25C47,12.85,37.15,3,25,3z">
+                            </path>
+                        </svg>
+                    </div>
+                    <span class="text">Facebook</span>
+                </button></a>
+            <a href="https://ochokom.github.io/portfolio/" target="_blank" rel="noopener noreferrer"><button
+                    class="user-btn portfolio">
+                    <div class="icon">
+                        <svg height="24" viewBox="0 -960 960 960" width="24" fill="#06acfb">
+                            <path
+                                d="M240.92-268.31q51-37.84 111.12-59.77Q412.15-350 480-350t127.96 21.92q60.12 21.93 111.12 59.77 37.3-41 59.11-94.92Q800-417.15 800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 62.85 21.81 116.77 21.81 53.92 59.11 94.92ZM480-450q-54.77 0-92.38-37.62Q350-525.23 350-580q0-54.77 37.62-92.38Q425.23-710 480-710q54.77 0 92.38 37.62Q610-634.77 610-580q0 54.77-37.62 92.38Q534.77-450 480-450Zm0 350q-79.15 0-148.5-29.77t-120.65-81.08q-51.31-51.3-81.08-120.65Q100-400.85 100-480t29.77-148.5q29.77-69.35 81.08-120.65 51.3-51.31 120.65-81.08Q400.85-860 480-860t148.5 29.77q69.35 29.77 120.65 81.08 51.31 51.3 81.08 120.65Q860-559.15 860-480t-29.77 148.5q-29.77 69.35-81.08 120.65-51.3 51.31-120.65 81.08Q559.15-100 480-100Z">
+                            </path>
+                        </svg>
+                    </div>
+                    <span class="text">Portfolio</span>
+                </button></a>
+        </div>
         <div class="footer-bottom">
-            <p>copyright &copy;2024 OchoKOM. designed by <span>Martin Ocho</span></p>
+            <p>Copyright &copy;<span class="year"></span> OchoKOM. designed by <span>Martin Ocho</span></p>
         </div>
     </footer>
+    <script>
+        const year = new Date().getFullYear();
+        document.querySelector('.year').textContent = year;
+
+        const allCodeBlocs = document.querySelectorAll('pre');
+
+        allCodeBlocs.forEach(codeBloc => {
+            const copyButton = document.createElement('button');
+            copyButton.classList.add("copy-button");
+            copyButton.textContent = 'Copier';
+            copyButton.addEventListener('click', () => {
+                navigator.clipboard.writeText(codeBloc.textContent).then(
+                    () => {
+                        copyButton.textContent = 'Copié';
+                        setTimeout(() => {
+                            copyButton.textContent = 'Copier';
+                        }, 2000);
+                    }
+                ).catch(()=>alert("Impossible ce copier dans le presse-papier"));
+            });
+            codeBloc.appendChild(copyButton);
+        })
+
+    </script>
     <script type="module" src="./video-player.js"></script>
 </body>
 

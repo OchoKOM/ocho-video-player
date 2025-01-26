@@ -1,324 +1,680 @@
 import generate_thumbnails from "./thumbnail.js";
+import { detectDeviceType } from "./devicetype.js";
 
 export const player_controls = `
-<div class="light"></div>
-<svg class="loader" viewBox="25 25 50 50" stroke-width="5">
-  <circle cx="50" cy="50" r="20"></circle>
-</svg>
-<p class="caption-text">
-  <mark></mark>
-</p>
-<div class="video-controls-container">
-  <div class="timeline-container">
-    <div class="timeline">
-      <div class="preview-thumb" data-time="0:00">
-        <div></div>
+  <div class="light"></div>
+  <svg class="loader" viewBox="25 25 50 50" stroke-width="5">
+    <circle cx="50" cy="50" r="20"></circle>
+  </svg>
+  <p class="caption-text">
+    <mark></mark>
+  </p>
+  <div class="video-controls-container">
+    <div class="timeline-container">
+      <div class="timeline">
+        <div class="preview-thumb" data-time="0:00">
+          <div></div>
+        </div>
+        <div class="thumb-indicator"></div>
+        <canvas class="loaded-progress"></canvas>
       </div>
-      <div class="thumb-indicator"></div>
-      <canvas class="loaded-progress"></canvas>
     </div>
-  </div>
-  <div class="controls">
-    <button class="play-pause-btn">
-      <svg fill="currentColor" height="24">
-        <use xlink:href="#play-icon-fill"></use>
-      </svg>
-    </button>
-    <div class="volume-container">
-      <button class="mute-btn">
+    <div class="controls">
+      <button class="play-pause-btn">
         <svg fill="currentColor" height="24">
-          <use xlink:href="#volume-high-icon"></use>
+          <use xlink:href="#play-icon-fill"></use>
         </svg>
       </button>
-      <input
-        type="range"
-        min="0"
-        max="1"
-        step="any"
-        value="1"
-        class="volume-slider desktop-item"
-      />
+      <div class="volume-container">
+        <button class="mute-btn">
+          <svg fill="currentColor" height="24">
+            <use xlink:href="#volume-high-icon"></use>
+          </svg>
+        </button>
+        <input
+          type="range"
+          min="0"
+          max="1"
+          step="any"
+          value="1"
+          class="volume-slider desktop-item"
+        />
+      </div>
+      <div class="duration-container">
+        <span class="current-time">0:00</span>
+        <span>/</span>
+        <span class="total-time">-</span>
+      </div>
+      <div class="auto-play desktop-item">
+        <span>
+          <svg fill="currentColor" height="16"><use xlink:href="#pause-icon-fill"></use></svg>
+        </span>
+      </div>
+      <button class="caption-btn desktop-item">
+        <svg fill="currentColor" height="24">
+          <use xlink:href="#subtitle-icon"></use>
+        </svg>
+      </button>
+      <button class="settings-btn">
+        <svg fill="currentColor" height="24">
+          <use xlink:href="#cog-icon"></use>
+        </svg>
+      </button>
+      <button class="pip-btn desktop-item">
+        <svg fill="currentColor" height="24">
+          <use xlink:href="#pip-icon-fill"></use>
+        </svg>
+      </button>
+      <button class="cinema-btn desktop-item">
+        <svg fill="currentColor" height="24">
+          <use xlink:href="#cinema-tall-icon-fill"></use>
+        </svg>
+      </button>
+      <button class="fullscreen-btn">
+        <svg fill="currentColor" height="24">
+          <use xlink:href="#fullscreen-open-icon-fill"></use>
+        </svg>
+      </button>
     </div>
-    <div class="duration-container">
-      <span class="current-time">0:00</span>
-      <span>/</span>
-      <span class="total-time">-</span>
-    </div>
-    <div class="auto-play desktop-item">
-      <span>
-        <svg fill="currentColor" height="16"><use xlink:href="#pause-icon-fill"></use></svg>
-      </span>
-    </div>
-    <button class="caption-btn desktop-item">
-      <svg fill="currentColor" height="24">
-        <use xlink:href="#subtitle-icon"></use>
-      </svg>
-    </button>
-    <button class="settings-btn">
-      <svg fill="currentColor" height="24">
-        <use xlink:href="#cog-icon"></use>
-      </svg>
-    </button>
-    <button class="pip-btn desktop-item">
-      <svg fill="currentColor" height="24">
-        <use xlink:href="#pip-icon-fill"></use>
-      </svg>
-    </button>
-    <button class="cinema-btn desktop-item">
-      <svg fill="currentColor" height="24">
-        <use xlink:href="#cinema-tall-icon-fill"></use>
-      </svg>
-    </button>
-    <button class="fullscreen-btn">
-      <svg fill="currentColor" height="24">
-        <use xlink:href="#fullscreen-open-icon-fill"></use>
-      </svg>
-    </button>
-  </div>
-  <div class="settings-menu">
-    <div class="wrapper">
-      <ul class="main-section">
-        <li class="ambiant-light">
-          <label>
-            <svg viewBox="0 0 24 24" fill="currentColor" height="24">
-              <use xlink:href="#cinema-light"></use>
-            </svg>
-            <span>Eclairage de cinema</span>
-            <div class="icon arrow">
-              <div class="cl-switch">
-                <input type="checkbox" class="cinema-light-check" />
-                <span></span>
+    <div class="settings-menu">
+      <div class="wrapper">
+        <ul class="main-section">
+          <li class="ambiant-light">
+            <label>
+              <svg viewBox="0 0 24 24" fill="currentColor" height="24">
+                <use xlink:href="#cinema-light"></use>
+              </svg>
+              <span>Eclairage de cinema</span>
+              <div class="icon arrow">
+                <div class="cl-switch">
+                  <input type="checkbox" class="cinema-light-check" />
+                  <span></span>
+                </div>
               </div>
+            </label>
+          </li>
+          <li class="drop-item" data-drop="quality-drop">
+            <svg viewBox="0 0 48 48" fill="currentColor" height="24">
+              <use xlink:href="#tune-icon"></use>
+            </svg>
+            <span>Qualité</span>
+            <div class="icon arrow">
+              <svg viewBox="0 0 48 48" fill="currentColor">
+                <use xlink:href="#chevron-right-icon"></use>
+              </svg>
             </div>
-          </label>
-        </li>
-        <li class="drop-item" data-drop="quality-drop">
-          <svg viewBox="0 0 48 48" fill="currentColor" height="24">
-            <use xlink:href="#tune-icon"></use>
-          </svg>
-          <span>Qualité</span>
-          <div class="icon arrow">
-            <svg viewBox="0 0 48 48" fill="currentColor">
-              <use xlink:href="#chevron-right-icon"></use>
-            </svg>
-          </div>
-        </li>
-        <li class="drop-item" data-drop="captions-drop">
-          <svg viewBox="0 0 48 48" height="24" fill="currentColor">
-            <use xlink:href="#caption-icon"></use>
-          </svg>
-          <span>Sous-titres</span>
-          <div class="icon arrow">
-            <svg viewBox="0 0 48 48" fill="currentColor">
-              <use xlink:href="#chevron-right-icon"></use>
-            </svg>
-          </div>
-        </li>
-        <li class="loop-line">
-          <label>
+          </li>
+          <li class="drop-item" data-drop="captions-drop">
             <svg viewBox="0 0 48 48" height="24" fill="currentColor">
-              <use xlink:href="#repeat-one"></use>
+              <use xlink:href="#caption-icon"></use>
             </svg>
-            <span>Lecture en boucle</span>
+            <span>Sous-titres</span>
             <div class="icon arrow">
-              <div class="cl-switch">
-                <input type="checkbox" class="loop-check" />
-                <span></span>
-              </div>
+              <svg viewBox="0 0 48 48" fill="currentColor">
+                <use xlink:href="#chevron-right-icon"></use>
+              </svg>
             </div>
-          </label>
-        </li>
-        <li class="drop-item desktop-item" data-drop="speed-drop">
-          <svg viewBox="0 0 48 48" fill="currentColor" height="24">
-            <use xlink:href="#playback-speed"></use>
-          </svg>
-          <span>Vitesse de lecture</span>
-          <div class="icon arrow">
-            <svg viewBox="0 0 48 48" fill="currentColor">
-              <use xlink:href="#chevron-right-icon"></use>
-            </svg>
-          </div>
-        </li>
-        <li class="drop-item" data-drop="info-user-drop">
-          <svg viewBox="0 0 48 48" fill="currentColor" height="24">
-            <use xlink:href="#info-fill"></use>
-          </svg>
-          <span>Apropos de Ochokom</span>
-          <div class="icon arrow">
-            <svg viewBox="0 0 48 48" fill="currentColor">
-              <use xlink:href="#chevron-right-icon"></use>
-            </svg>
-          </div>
-        </li>
-      </ul>
-      <div class="drop quality-drop" id="quality-drop">
-        <div class="label">
-          <span class="back-icon">
-            <svg viewBox="0 0 24 24" height="24" fill="currentColor">
-              <use xlink:href="#chevron-left-icon"></use>
-            </svg>
-          </span>
-          <span>Qualité</span>
-        </div>
-        <ul></ul>
-      </div>
-      <div class="drop captions-drop">
-        <div class="label">
-          <span class="back-icon">
-            <svg viewBox="0 0 24 24" height="24" fill="currentColor">
-              <use xlink:href="#chevron-left-icon"></use>
-            </svg>
-          </span>
-          <span>Sous-titre</span>
-        </div>
-        <ul></ul>
-      </div>
-      <div class="drop speed-drop desktop-item">
-        <div class="label">
-          <span class="back-icon">
-            <svg viewBox="0 0 24 24" height="24" fill="currentColor">
-              <use xlink:href="#chevron-left-icon"></use>
-            </svg>
-          </span>
-          <span>Vitesse de lecture</span>
-        </div>
-        <ul>
-          <li data-speed="0.5">
-            <div class="check"></div>
-            <span>0.5</span>
           </li>
-          <li data-speed="0.75">
-            <div class="check"></div>
-            <span>0.75</span>
+          <li class="loop-line">
+            <label>
+              <svg viewBox="0 0 48 48" height="24" fill="currentColor">
+                <use xlink:href="#repeat-one"></use>
+              </svg>
+              <span>Lecture en boucle</span>
+              <div class="icon arrow">
+                <div class="cl-switch">
+                  <input type="checkbox" class="loop-check" />
+                  <span></span>
+                </div>
+              </div>
+            </label>
           </li>
-          <li data-speed="1">
-            <div class="check active"></div>
-            <span>Normale</span>
+          <li class="drop-item desktop-item" data-drop="speed-drop">
+            <svg viewBox="0 0 48 48" fill="currentColor" height="24">
+              <use xlink:href="#playback-speed"></use>
+            </svg>
+            <span>Vitesse de lecture</span>
+            <div class="icon arrow">
+              <svg viewBox="0 0 48 48" fill="currentColor">
+                <use xlink:href="#chevron-right-icon"></use>
+              </svg>
+            </div>
           </li>
-          <li data-speed="1.5">
-            <div class="check"></div>
-            <span>1.5</span>
-          </li>
-          <li data-speed="2">
-            <div class="check"></div>
-            <span>2</span>
-          </li>
-          <li data-speed="2.5">
-            <div class="check"></div>
-            <span>2.5</span>
+          <li class="drop-item" data-drop="info-user-drop">
+            <svg viewBox="0 0 48 48" fill="currentColor" height="24">
+              <use xlink:href="#info-fill"></use>
+            </svg>
+            <span>Apropos de Ochokom</span>
+            <div class="icon arrow">
+              <svg viewBox="0 0 48 48" fill="currentColor">
+                <use xlink:href="#chevron-right-icon"></use>
+              </svg>
+            </div>
           </li>
         </ul>
-      </div>
-      <div class="drop info-user-drop">
-        <div class="label">
-          <span>
-            <svg
-              viewBox="0 0 24 24"
-              height="24"
-              fill="currentColor"
-              class="back-icon"
-            >
-              <use xlink:href="#chevron-left-icon"></use>
-            </svg>
-          </span>
-          <span>A propos de Ochokom</span>
+        <div class="drop quality-drop" id="quality-drop">
+          <div class="label">
+            <span class="back-icon">
+              <svg viewBox="0 0 24 24" height="24" fill="currentColor">
+                <use xlink:href="#chevron-left-icon"></use>
+              </svg>
+            </span>
+            <span>Qualité</span>
+          </div>
+          <ul></ul>
         </div>
-        <div class="info-drop">
-          <div class="channel-profile">
-            <img
-              src="https://ochokom.github.io/videos-ocho/logo.webp"
-              alt="profile"
-            />
+        <div class="drop captions-drop">
+          <div class="label">
+            <span class="back-icon">
+              <svg viewBox="0 0 24 24" height="24" fill="currentColor">
+                <use xlink:href="#chevron-left-icon"></use>
+              </svg>
+            </span>
+            <span>Sous-titre</span>
           </div>
-          <p>Martin Ocho</p>
-          <div class="user-btns">
-            <a
-              href="https://youtube.com/@ochokom"
-              target="_blank"
-              rel="noopener noreferrer"
-              ><button class="user-btn youtube">
-                <div class="icon">
-                  <svg
-                    fill="#fffcfd"
-                    width="24"
-                    height="24"
-                    viewBox="0 0 32 32"
-                  >
-                    <title>youtube</title>
-                    <path
-                      d="M12.932 20.459v-8.917l7.839 4.459zM30.368 8.735c-0.354-1.301-1.354-2.307-2.625-2.663l-0.027-0.006c-3.193-0.406-6.886-0.638-10.634-0.638-0.381 0-0.761 0.002-1.14 0.007l0.058-0.001c-0.322-0.004-0.701-0.007-1.082-0.007-3.748 0-7.443 0.232-11.070 0.681l0.434-0.044c-1.297 0.363-2.297 1.368-2.644 2.643l-0.006 0.026c-0.4 2.109-0.628 4.536-0.628 7.016 0 0.088 0 0.176 0.001 0.263l-0-0.014c-0 0.074-0.001 0.162-0.001 0.25 0 2.48 0.229 4.906 0.666 7.259l-0.038-0.244c0.354 1.301 1.354 2.307 2.625 2.663l0.027 0.006c3.193 0.406 6.886 0.638 10.634 0.638 0.38 0 0.76-0.002 1.14-0.007l-0.058 0.001c0.322 0.004 0.702 0.007 1.082 0.007 3.749 0 7.443-0.232 11.070-0.681l-0.434 0.044c1.298-0.362 2.298-1.368 2.646-2.643l0.006-0.026c0.399-2.109 0.627-4.536 0.627-7.015 0-0.088-0-0.176-0.001-0.263l0 0.013c0-0.074 0.001-0.162 0.001-0.25 0-2.48-0.229-4.906-0.666-7.259l0.038 0.244z"
-                    />
-                  </svg>
-                </div>
-                <span class="text">Youtube</span>
-              </button></a
-            >
-            <a
-              href="https://github.com/OchoKOM/"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <button class="user-btn github">
-                <div class="icon">
-                  <svg width="24" height="24" viewBox="0 0 96 96">
-                    <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
-                      d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
-                      fill="#fff"
-                    />
-                  </svg>
-                </div>
-                <span class="text">GitHub</span>
-              </button></a
-            >
+          <ul></ul>
+        </div>
+        <div class="drop speed-drop desktop-item">
+          <div class="label">
+            <span class="back-icon">
+              <svg viewBox="0 0 24 24" height="24" fill="currentColor">
+                <use xlink:href="#chevron-left-icon"></use>
+              </svg>
+            </span>
+            <span>Vitesse de lecture</span>
           </div>
-          <div class="user-btns">
-            <a
-              href="https://facebook.com/ochokom"
-              target="_blank"
-              rel="noopener noreferrer"
-              ><button class="user-btn facebook">
-                <div class="icon">
-                  <svg width="24" height="24" viewBox="0 0 50 50">
-                    <path
-                      fill="#fff"
-                      d="M25,3C12.85,3,3,12.85,3,25c0,11.03,8.125,20.137,18.712,21.728V30.831h-5.443v-5.783h5.443v-3.848 c0-6.371,3.104-9.168,8.399-9.168c2.536,0,3.877,0.188,4.512,0.274v5.048h-3.612c-2.248,0-3.033,2.131-3.033,4.533v3.161h6.588 l-0.894,5.783h-5.694v15.944C38.716,45.318,47,36.137,47,25C47,12.85,37.15,3,25,3z"
-                    ></path>
-                  </svg>
-                </div>
-                <span class="text">Facebook</span>
-              </button></a
-            >
-            <a
-              href="https://ochokom.github.io/portfolio/"
-              target="_blank"
-              rel="noopener noreferrer"
-              ><button class="user-btn portfolio">
-                <div class="icon">
-                  <svg
-                    height="24"
-                    viewBox="0 -960 960 960"
-                    width="24"
-                    fill="#06acfb"
-                  >
-                    <path
-                      d="M240.92-268.31q51-37.84 111.12-59.77Q412.15-350 480-350t127.96 21.92q60.12 21.93 111.12 59.77 37.3-41 59.11-94.92Q800-417.15 800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 62.85 21.81 116.77 21.81 53.92 59.11 94.92ZM480-450q-54.77 0-92.38-37.62Q350-525.23 350-580q0-54.77 37.62-92.38Q425.23-710 480-710q54.77 0 92.38 37.62Q610-634.77 610-580q0 54.77-37.62 92.38Q534.77-450 480-450Zm0 350q-79.15 0-148.5-29.77t-120.65-81.08q-51.31-51.3-81.08-120.65Q100-400.85 100-480t29.77-148.5q29.77-69.35 81.08-120.65 51.3-51.31 120.65-81.08Q400.85-860 480-860t148.5 29.77q69.35 29.77 120.65 81.08 51.31 51.3 81.08 120.65Q860-559.15 860-480t-29.77 148.5q-29.77 69.35-81.08 120.65-51.3 51.31-120.65 81.08Q559.15-100 480-100Z"
-                    />
-                  </svg>
-                </div>
-                <span class="text">Portfolio</span>
-              </button></a
-            >
+          <ul>
+            <li data-speed="0.5">
+              <div class="check"></div>
+              <span>0.5</span>
+            </li>
+            <li data-speed="0.75">
+              <div class="check"></div>
+              <span>0.75</span>
+            </li>
+            <li data-speed="1">
+              <div class="check active"></div>
+              <span>Normale</span>
+            </li>
+            <li data-speed="1.5">
+              <div class="check"></div>
+              <span>1.5</span>
+            </li>
+            <li data-speed="2">
+              <div class="check"></div>
+              <span>2</span>
+            </li>
+            <li data-speed="2.5">
+              <div class="check"></div>
+              <span>2.5</span>
+            </li>
+          </ul>
+        </div>
+        <div class="drop info-user-drop">
+          <div class="label">
+            <span>
+              <svg
+                viewBox="0 0 24 24"
+                height="24"
+                fill="currentColor"
+                class="back-icon"
+              >
+                <use xlink:href="#chevron-left-icon"></use>
+              </svg>
+            </span>
+            <span>A propos de Ochokom</span>
+          </div>
+          <div class="info-drop">
+            <div class="channel-profile">
+              <img
+                src="https://ochokom.github.io/videos-ocho/logo.webp"
+                alt="profile"
+              />
+            </div>
+            <p>Martin Ocho</p>
+            <div class="user-btns">
+              <a
+                href="https://youtube.com/@ochokom"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><button class="user-btn youtube">
+                  <div class="icon">
+                    <svg
+                      fill="#fffcfd"
+                      width="24"
+                      height="24"
+                      viewBox="0 0 32 32"
+                    >
+                      <title>youtube</title>
+                      <path
+                        d="M12.932 20.459v-8.917l7.839 4.459zM30.368 8.735c-0.354-1.301-1.354-2.307-2.625-2.663l-0.027-0.006c-3.193-0.406-6.886-0.638-10.634-0.638-0.381 0-0.761 0.002-1.14 0.007l0.058-0.001c-0.322-0.004-0.701-0.007-1.082-0.007-3.748 0-7.443 0.232-11.070 0.681l0.434-0.044c-1.297 0.363-2.297 1.368-2.644 2.643l-0.006 0.026c-0.4 2.109-0.628 4.536-0.628 7.016 0 0.088 0 0.176 0.001 0.263l-0-0.014c-0 0.074-0.001 0.162-0.001 0.25 0 2.48 0.229 4.906 0.666 7.259l-0.038-0.244c0.354 1.301 1.354 2.307 2.625 2.663l0.027 0.006c3.193 0.406 6.886 0.638 10.634 0.638 0.38 0 0.76-0.002 1.14-0.007l-0.058 0.001c0.322 0.004 0.702 0.007 1.082 0.007 3.749 0 7.443-0.232 11.070-0.681l-0.434 0.044c1.298-0.362 2.298-1.368 2.646-2.643l0.006-0.026c0.399-2.109 0.627-4.536 0.627-7.015 0-0.088-0-0.176-0.001-0.263l0 0.013c0-0.074 0.001-0.162 0.001-0.25 0-2.48-0.229-4.906-0.666-7.259l0.038 0.244z"
+                      />
+                    </svg>
+                  </div>
+                  <span class="text">Youtube</span>
+                </button></a
+              >
+              <a
+                href="https://github.com/OchoKOM/"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <button class="user-btn github">
+                  <div class="icon">
+                    <svg width="24" height="24" viewBox="0 0 96 96">
+                      <path
+                        fill-rule="evenodd"
+                        clip-rule="evenodd"
+                        d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+                        fill="#fff"
+                      />
+                    </svg>
+                  </div>
+                  <span class="text">GitHub</span>
+                </button></a
+              >
+            </div>
+            <div class="user-btns">
+              <a
+                href="https://facebook.com/ochokom"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><button class="user-btn facebook">
+                  <div class="icon">
+                    <svg width="24" height="24" viewBox="0 0 50 50">
+                      <path
+                        fill="#fff"
+                        d="M25,3C12.85,3,3,12.85,3,25c0,11.03,8.125,20.137,18.712,21.728V30.831h-5.443v-5.783h5.443v-3.848 c0-6.371,3.104-9.168,8.399-9.168c2.536,0,3.877,0.188,4.512,0.274v5.048h-3.612c-2.248,0-3.033,2.131-3.033,4.533v3.161h6.588 l-0.894,5.783h-5.694v15.944C38.716,45.318,47,36.137,47,25C47,12.85,37.15,3,25,3z"
+                      ></path>
+                    </svg>
+                  </div>
+                  <span class="text">Facebook</span>
+                </button></a
+              >
+              <a
+                href="https://ochokom.github.io/portfolio/"
+                target="_blank"
+                rel="noopener noreferrer"
+                ><button class="user-btn portfolio">
+                  <div class="icon">
+                    <svg
+                      height="24"
+                      viewBox="0 -960 960 960"
+                      width="24"
+                      fill="#06acfb"
+                    >
+                      <path
+                        d="M240.92-268.31q51-37.84 111.12-59.77Q412.15-350 480-350t127.96 21.92q60.12 21.93 111.12 59.77 37.3-41 59.11-94.92Q800-417.15 800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 62.85 21.81 116.77 21.81 53.92 59.11 94.92ZM480-450q-54.77 0-92.38-37.62Q350-525.23 350-580q0-54.77 37.62-92.38Q425.23-710 480-710q54.77 0 92.38 37.62Q610-634.77 610-580q0 54.77-37.62 92.38Q534.77-450 480-450Zm0 350q-79.15 0-148.5-29.77t-120.65-81.08q-51.31-51.3-81.08-120.65Q100-400.85 100-480t29.77-148.5q29.77-69.35 81.08-120.65 51.3-51.31 120.65-81.08Q400.85-860 480-860t148.5 29.77q69.35 29.77 120.65 81.08 51.31 51.3 81.08 120.65Q860-559.15 860-480t-29.77 148.5q-29.77 69.35-81.08 120.65-51.3 51.31-120.65 81.08Q559.15-100 480-100Z"
+                      />
+                    </svg>
+                  </div>
+                  <span class="text">Portfolio</span>
+                </button></a
+              >
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
     `;
+
+export const mobile_player_controls = `
+  <div class="light"></div>
+    <svg class="loader" viewBox="25 25 50 50" stroke-width="5">
+      <circle cx="50" cy="50" r="20"></circle>
+    </svg>
+    <p class="caption-text">
+      <mark></mark>
+    </p>
+    <div class="overlay"></div>
+    <div class="video-controls-container">
+      <div class="overlay"></div>
+      <div class="controls top">
+        <div class="volume-container">
+          <button class="mute-btn" title="Son (m)">
+            <svg fill="currentColor" height="30">
+              <use xlink:href="#volume-high-icon"></use>
+            </svg>
+          </button>
+      </div>
+      <div class="auto-play" title="Lecture automatique">
+        <span>
+          <svg fill="currentColor" height="16"><use xlink:href="#pause-icon-fill"></use></svg>
+        </span>
+      </div>
+        <button class="caption-btn" title="Sous-titres">
+          <svg fill="currentColor" height="30">
+            <use xlink:href="#closed-caption-icon"></use>
+          </svg>
+        </button>
+        <button class="settings-btn" title="Sous-titres">
+          <svg fill="currentColor" height="30">
+            <use xlink:href="#cog-icon"></use>
+          </svg>
+        </button>
+        <button class="close-controls-btn" title="Fermer">
+          <svg fill="currentColor" height="24"> 
+            <use xlink:href="#times-icon"></use>
+          </svg>
+        </button>
+      </div>
+      <div class="controls center">
+        <button class="prev-btn" title="Précédent">
+          <svg fill="currentColor" height="30">
+            <use xlink:href="#prev-icon"></use>
+          </svg>
+        </button>
+        <button class="play-pause-btn" title="Lecture (k)">
+          <svg fill="currentColor" height="50">
+            <use xlink:href="#play-icon-fill"></use>
+          </svg>
+        </button>
+        <button class="next-btn" title="Suivant">
+          <svg fill="currentColor" height="30">
+            <use xlink:href="#next-icon"></use>
+          </svg>
+        </button>
+      </div>
+      <div class="controls bottom">
+          <div class="controls">
+
+              <div class="duration-container">
+                  <span class="current-time">0:00</span>
+                  <span>/</span>
+                  <span class="total-time">-</span>
+              </div>
+              <div class="volume-container">
+                <button class="mute-btn" title="Son (m)">
+                  <svg fill="currentColor" height="24">
+                    <use xlink:href="#volume-high-icon"></use>
+                  </svg>
+                </button>
+              </div>
+              <button class="fullscreen-btn" title="Mode plein écran (f)">
+                <svg fill="currentColor" height="24">
+                  <use xlink:href="#fullscreen-open-icon-fill"></use>
+                </svg>
+              </button>
+          </div>
+          <div class="timeline-container">
+            <div class="timeline">
+              <div class="preview-thumb" data-time="0:00">
+                <div></div>
+              </div>
+              <div class="thumb-indicator"></div>
+              <canvas class="loaded-progress"></canvas>
+            </div>
+          </div>
+      </div>
+      <div class="settings-menu">
+        <div class="wrapper">
+          <ul class="main-section">
+            <li class="ambiant-light">
+              <label>
+                <span>
+                  <svg viewBox="0 0 24 24" fill="currentColor" height="30">
+                    <use xlink:href="#cinema-light"></use>
+                  </svg>
+                </span>
+                <span>Eclairage de cinema</span>
+                <div class="icon arrow">
+                  <div class="cl-switch">
+                    <input type="checkbox" class="cinema-light-check" />
+                    <span></span>
+                  </div>
+                </div>
+              </label>
+            </li>
+            <li class="drop-item" data-drop="quality-drop">
+              <span>
+                <svg viewBox="0 0 48 48" fill="currentColor" height="30">
+                  <use xlink:href="#tune-icon"></use>
+                </svg>
+              </span>
+              <span>Qualité</span>
+              <div class="icon arrow">
+                <svg viewBox="0 0 48 48" fill="currentColor">
+                  <use xlink:href="#chevron-right-icon"></use>
+                </svg>
+              </div>
+            </li>
+            <li class="drop-item" data-drop="captions-drop">
+              <span>
+                <svg viewBox="0 0 48 48" height="30" fill="currentColor">
+                  <use xlink:href="#caption-icon"></use>
+                </svg>
+              </span>
+              <span>Sous-titres</span>
+              <div class="icon arrow">
+                <svg viewBox="0 0 48 48" fill="currentColor">
+                  <use xlink:href="#chevron-right-icon"></use>
+                </svg>
+              </div>
+            </li>
+            <li class="loop-line">
+              <label>
+                <span>
+                  <svg viewBox="0 0 48 48" height="30" fill="currentColor">
+                    <use xlink:href="#repeat-one"></use>
+                  </svg>
+                </span>
+                <span>Lecture en boucle</span>
+                <div class="icon arrow">
+                  <div class="cl-switch">
+                    <input type="checkbox" class="loop-check" />
+                    <span></span>
+                  </div>
+                </div>
+              </label>
+            </li>
+            <li class="drop-item" data-drop="speed-drop">
+              <span>
+                <svg viewBox="0 0 48 48" fill="currentColor" height="30">
+                  <use xlink:href="#playback-speed"></use>
+                </svg>
+              </span>
+              <span>Vitesse de lecture</span>
+              <div class="icon arrow">
+                <svg viewBox="0 0 48 48" fill="currentColor">
+                  <use xlink:href="#chevron-right-icon"></use>
+                </svg>
+              </div>
+            </li>
+            <li class="drop-item" data-drop="info-user-drop">
+              <span>
+                <svg viewBox="0 0 48 48" fill="currentColor" height="30">
+                  <use xlink:href="#info-fill"></use>
+                </svg>
+              </span>
+              <span>A propos de OchoKOM</span>
+              <div class="icon arrow">
+                <svg viewBox="0 0 48 48" fill="currentColor">
+                  <use xlink:href="#chevron-right-icon"></use>
+                </svg>
+              </div>
+            </li>
+          </ul>
+          <div class="drop quality-drop" id="quality-drop">
+            <div class="label">
+              <span class="back-icon">
+                <svg viewBox="0 0 24 24" height="30" fill="currentColor">
+                  <use xlink:href="#chevron-left-icon"></use>
+                </svg>
+              </span>
+              <span>Qualité</span>
+            </div>
+            <ul></ul>
+          </div>
+          <div class="drop captions-drop">
+            <div class="label">
+              <span class="back-icon">
+                <svg viewBox="0 0 24 24" height="30" fill="currentColor">
+                  <use xlink:href="#chevron-left-icon"></use>
+                </svg>
+              </span>
+              <span>Sous-titre</span>
+            </div>
+            <ul></ul>
+          </div>
+          <div class="drop speed-drop">
+            <div class="label">
+              <span class="back-icon">
+                <svg viewBox="0 0 24 24" height="30" fill="currentColor">
+                  <use xlink:href="#chevron-left-icon"></use>
+                </svg>
+              </span>
+              <span>Vitesse de lecture</span>
+            </div>
+            <ul>
+              <li data-speed="0.5">
+                <div class="check"></div>
+                <span>0.5</span>
+              </li>
+              <li data-speed="0.75">
+                <div class="check"></div>
+                <span>0.75</span>
+              </li>
+              <li data-speed="1">
+                <div class="check active"></div>
+                <span>Normale</span>
+              </li>
+              <li data-speed="1.5">
+                <div class="check"></div>
+                <span>1.5</span>
+              </li>
+              <li data-speed="2">
+                <div class="check"></div>
+                <span>2</span>
+              </li>
+              <li data-speed="2.5">
+                <div class="check"></div>
+                <span>2.5</span>
+              </li>
+            </ul>
+          </div>
+          <div class="drop info-user-drop">
+            <div class="label">
+              <span>
+                <svg
+                  viewBox="0 0 24 24"
+                  height="24"
+                  fill="currentColor"
+                  class="back-icon"
+                >
+                  <use xlink:href="#chevron-left-icon"></use>
+                </svg>
+              </span>
+              <span>A propos de Ochokom</span>
+            </div>
+            <div class="info-drop">
+              <div class="channel-profile">
+                <img
+                  src="https://ochokom.github.io/videos-ocho/logo.webp"
+                  alt="profile"
+                />
+              </div>
+              <p>Martin Ocho</p>
+              <div class="user-btns">
+                <a
+                  href="https://youtube.com/@ochokom"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  ><button class="user-btn youtube">
+                    <div class="icon">
+                      <svg
+                        fill="#fffcfd"
+                        width="24"
+                        height="24"
+                        viewBox="0 0 32 32"
+                      >
+                        <title>youtube</title>
+                        <path
+                          d="M12.932 20.459v-8.917l7.839 4.459zM30.368 8.735c-0.354-1.301-1.354-2.307-2.625-2.663l-0.027-0.006c-3.193-0.406-6.886-0.638-10.634-0.638-0.381 0-0.761 0.002-1.14 0.007l0.058-0.001c-0.322-0.004-0.701-0.007-1.082-0.007-3.748 0-7.443 0.232-11.070 0.681l0.434-0.044c-1.297 0.363-2.297 1.368-2.644 2.643l-0.006 0.026c-0.4 2.109-0.628 4.536-0.628 7.016 0 0.088 0 0.176 0.001 0.263l-0-0.014c-0 0.074-0.001 0.162-0.001 0.25 0 2.48 0.229 4.906 0.666 7.259l-0.038-0.244c0.354 1.301 1.354 2.307 2.625 2.663l0.027 0.006c3.193 0.406 6.886 0.638 10.634 0.638 0.38 0 0.76-0.002 1.14-0.007l-0.058 0.001c0.322 0.004 0.702 0.007 1.082 0.007 3.749 0 7.443-0.232 11.070-0.681l-0.434 0.044c1.298-0.362 2.298-1.368 2.646-2.643l0.006-0.026c0.399-2.109 0.627-4.536 0.627-7.015 0-0.088-0-0.176-0.001-0.263l0 0.013c0-0.074 0.001-0.162 0.001-0.25 0-2.48-0.229-4.906-0.666-7.259l0.038 0.244z"
+                        />
+                      </svg>
+                    </div>
+                    <span class="text">Youtube</span>
+                  </button></a
+                >
+                <a
+                  href="https://github.com/OchoKOM/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <button class="user-btn github">
+                    <div class="icon">
+                      <svg width="24" height="24" viewBox="0 0 96 96">
+                        <path
+                          fill-rule="evenodd"
+                          clip-rule="evenodd"
+                          d="M48.854 0C21.839 0 0 22 0 49.217c0 21.756 13.993 40.172 33.405 46.69 2.427.49 3.316-1.059 3.316-2.362 0-1.141-.08-5.052-.08-9.127-13.59 2.934-16.42-5.867-16.42-5.867-2.184-5.704-5.42-7.17-5.42-7.17-4.448-3.015.324-3.015.324-3.015 4.934.326 7.523 5.052 7.523 5.052 4.367 7.496 11.404 5.378 14.235 4.074.404-3.178 1.699-5.378 3.074-6.6-10.839-1.141-22.243-5.378-22.243-24.283 0-5.378 1.94-9.778 5.014-13.2-.485-1.222-2.184-6.275.486-13.038 0 0 4.125-1.304 13.426 5.052a46.97 46.97 0 0 1 12.214-1.63c4.125 0 8.33.571 12.213 1.63 9.302-6.356 13.427-5.052 13.427-5.052 2.67 6.763.97 11.816.485 13.038 3.155 3.422 5.015 7.822 5.015 13.2 0 18.905-11.404 23.06-22.324 24.283 1.78 1.548 3.316 4.481 3.316 9.126 0 6.6-.08 11.897-.08 13.526 0 1.304.89 2.853 3.316 2.364 19.412-6.52 33.405-24.935 33.405-46.691C97.707 22 75.788 0 48.854 0z"
+                          fill="#fff"
+                        />
+                      </svg>
+                    </div>
+                    <span class="text">GitHub</span>
+                  </button></a
+                >
+              </div>
+              <div class="user-btns">
+                <a
+                  href="https://facebook.com/ochokom"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  ><button class="user-btn facebook">
+                    <div class="icon">
+                      <svg width="24" height="24" viewBox="0 0 50 50">
+                        <path
+                          fill="#fff"
+                          d="M25,3C12.85,3,3,12.85,3,25c0,11.03,8.125,20.137,18.712,21.728V30.831h-5.443v-5.783h5.443v-3.848 c0-6.371,3.104-9.168,8.399-9.168c2.536,0,3.877,0.188,4.512,0.274v5.048h-3.612c-2.248,0-3.033,2.131-3.033,4.533v3.161h6.588 l-0.894,5.783h-5.694v15.944C38.716,45.318,47,36.137,47,25C47,12.85,37.15,3,25,3z"
+                        ></path>
+                      </svg>
+                    </div>
+                    <span class="text">Facebook</span>
+                  </button></a
+                >
+                <a
+                  href="https://ochokom.github.io/portfolio/"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  ><button class="user-btn portfolio">
+                    <div class="icon">
+                      <svg
+                        height="24"
+                        viewBox="0 -960 960 960"
+                        width="24"
+                        fill="#06acfb"
+                      >
+                        <path
+                          d="M240.92-268.31q51-37.84 111.12-59.77Q412.15-350 480-350t127.96 21.92q60.12 21.93 111.12 59.77 37.3-41 59.11-94.92Q800-417.15 800-480q0-133-93.5-226.5T480-800q-133 0-226.5 93.5T160-480q0 62.85 21.81 116.77 21.81 53.92 59.11 94.92ZM480-450q-54.77 0-92.38-37.62Q350-525.23 350-580q0-54.77 37.62-92.38Q425.23-710 480-710q54.77 0 92.38 37.62Q610-634.77 610-580q0 54.77-37.62 92.38Q534.77-450 480-450Zm0 350q-79.15 0-148.5-29.77t-120.65-81.08q-51.31-51.3-81.08-120.65Q100-400.85 100-480t29.77-148.5q29.77-69.35 81.08-120.65 51.3-51.31 120.65-81.08Q400.85-860 480-860t148.5 29.77q69.35 29.77 120.65 81.08 51.31 51.3 81.08 120.65Q860-559.15 860-480t-29.77 148.5q-29.77 69.35-81.08 120.65-51.3 51.31-120.65 81.08Q559.15-100 480-100Z"
+                        />
+                      </svg>
+                    </div>
+                    <span class="text">Portfolio</span>
+                  </button></a
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  `;
 export const player_svgs = `
     <svg style="display: none;">
+    <symbol id="caption-icon" viewbox="0 0 48 48">
+      <path
+        d="M9 40q-1.2 0-2.1-.9Q6 38.2 6 37V11q0-1.2.9-2.1Q7.8 8 9 8h30q1.2 0 2.1.9.9.9.9 2.1v26q0 1.2-.9 2.1-.9.9-2.1.9Zm0-3h30V11H9v26Zm4.5-7.05h7.1q.65 0 1.075-.425.425-.425.425-1.075v-2.1h-2.5v1.1h-5.1v-6.9h5.1v1.1h2.5v-2.1q0-.65-.425-1.075-.425-.425-1.075-.425h-7.1q-.65 0-1.075.425Q12 18.9 12 19.55v8.9q0 .65.425 1.075.425.425 1.075.425Zm13.95 0h7.1q.6 0 1.05-.45.45-.45.45-1.05v-2.1h-2.5v1.1h-5.1v-6.9h5.1v1.1h2.5v-2.1q0-.6-.45-1.05-.45-.45-1.05-.45h-7.1q-.6 0-1.05.45-.45.45-.45 1.05v8.9q0 .6.45 1.05.45.45 1.05.45ZM9 37V11v26Z" />
+    </symbol>
+    <symbol id="times-icon" viewbox="0 0 48 48">
+      <path
+        d="m12.45 37.65-2.1-2.1L21.9 24 10.35 12.45l2.1-2.1L24 21.9l11.55-11.55 2.1 2.1L26.1 24l11.55 11.55-2.1 2.1L24 26.1Z" />
+    </symbol>
+    <symbol id="closed-caption-icon" viewbox="0 0 48 48">
+      <path
+        d="M9 40q-1.2 0-2.1-.9Q6 38.2 6 37V11q0-1.2.9-2.1Q7.8 8 9 8h30q1.2 0 2.1.9.9.9.9 2.1v26q0 1.2-.9 2.1-.9.9-2.1.9Zm0-3h30V11H9v26Zm4.5-7.05h7.1q.65 0 1.075-.425.425-.425.425-1.075v-2.1h-2.5v1.1h-5.1v-6.9h5.1v1.1h2.5v-2.1q0-.65-.425-1.075-.425-.425-1.075-.425h-7.1q-.65 0-1.075.425Q12 18.9 12 19.55v8.9q0 .65.425 1.075.425.425 1.075.425Zm13.95 0h7.1q.6 0 1.05-.45.45-.45.45-1.05v-2.1h-2.5v1.1h-5.1v-6.9h5.1v1.1h2.5v-2.1q0-.6-.45-1.05-.45-.45-1.05-.45h-7.1q-.6 0-1.05.45-.45.45-.45 1.05v8.9q0 .6.45 1.05.45.45 1.05.45ZM9 37V11v26Z" />
+    </symbol>
     <symbol id="play-icon-fill" viewbox="0 0 24 24">
       <path d="M8,5.14V19.14L19,12.14L8,5.14Z" />
     </symbol>
@@ -410,10 +766,17 @@ class OchoPlayer extends HTMLElement {
   }
 
   render() {
+    const player = this.shadowRoot;
+    const src = this.getAttribute("src") ? this.getAttribute("src") : "";
+    const deviceType = detectDeviceType();
+    const isMobile =
+      (!this.hasAttribute("mobile-disabled")) && (this.hasAttribute("mobile") ||
+      deviceType === "mobile" ||
+      deviceType === "tablet");
+
     const container = document.createElement("div");
     const ocho_player = this;
     container.classList.add("ocho-player-container");
-    const player = this.shadowRoot;
     const video = document.createElement("video");
     this.classList.add("player");
     video.classList.add("main-video");
@@ -435,25 +798,41 @@ class OchoPlayer extends HTMLElement {
     tracks.forEach((track) => {
       video.appendChild(track);
     });
-    const style_src =
-      location.hostname !== "ochokom.github.io"
-        ? "https://ochokom.github.io/ocho-video-player/player.css"
-        : "./player.css";
+    const stylesheet = isMobile ? "mobile-player.css" : "player.css";
+    const style_src = !(location.hostname !== "ochokom.github.io")
+      ? `https://ochokom.github.io/ocho-video-player/${stylesheet}`
+      : `./${stylesheet}`;
+    player.appendChild(container);
 
     // Ajouter le tout au Shadow DOM
     container.innerHTML = `
           <link rel="stylesheet" href="${style_src}">
-          ${player_controls}
+          ${isMobile ? mobile_player_controls : player_controls}
           ${player_svgs}
         `;
+    if (src.startsWith("https://www.youtube.com/watch?v=")) {
+      const youtube_embed = src.replace(
+        "https://www.youtube.com/watch?v=",
+        "https://www.youtube.com/embed/"
+      );
+      const youtube_player = `
+          <iframe style="width: 100%; aspect-ratio: 16/9;" src="${youtube_embed}" title="video placeholder" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+          </iframe>
+      `;
+      this.classList.add("youtube-player");
+      container.innerHTML = youtube_player;
+      container.style = `aspect-ratio: 16/9;
+  max-height: 80vh;`;
+      player.appendChild(container);
+      return;
+    }
     container.appendChild(video);
-    player.appendChild(container);
 
     const loader_spinner = player.querySelector(".loader"),
       timeline = player.querySelector(".timeline"),
       loaded_progress = player.querySelector(".loaded-progress"),
       play_pause_btn = player.querySelector(".play-pause-btn"),
-      mute_btn = player.querySelector(".mute-btn"),
+      mute_btns = player.querySelectorAll(".mute-btn"),
       volume_slider = player.querySelector(".volume-slider"),
       preview_thumb_el = player.querySelector(".preview-thumb"),
       preview_thumbnails = generate_thumbnails(video.src),
@@ -508,6 +887,64 @@ class OchoPlayer extends HTMLElement {
       }
     });
 
+    // ? Touch events
+    function touch_screen_controls() {
+      const overlays = container.querySelectorAll(".overlay");
+      const close_controls = container.querySelectorAll(".close-controls-btn");
+      overlays.forEach((overlay) => {
+        overlay.addEventListener("click", () => {
+          container.classList.toggle("control");
+          settings_btn.classList.contains("active") && remove_settings();
+        });
+      });
+      close_controls.forEach((close_control) => {
+        close_control.addEventListener("click", () => {
+          container.classList.toggle("control");
+          settings_btn.classList.contains("active") && remove_settings();
+        });
+      });
+      toggle_mute();
+      // Vérifier si l'API Orientation Events est prise en charge par le navigateur
+      if ("onorientationchange" in window) {
+        // Ajouter un écouteur d'événement pour détecter les changements d'orientation
+        screen.orientation.addEventListener("change", (e) => {
+          if (e.srcElement.type.startsWith("landscape")) {
+            if (document.fullscreenElement === null && document.querySelectorAll("ocho-player").length === 1) {
+              toggle_fullscreen_mode();
+              screen.orientation.addEventListener("change", (e) => {
+                if (e.srcElement.type.startsWith("portrait")) {
+                  if (document.fullscreenElement !== null) {
+                    toggle_fullscreen_mode();
+                  }
+                }
+              });
+            }
+          }
+          container.addEventListener("fullscreenchange", () => {
+            if ("orientation" in screen && "lock" in screen.orientation) {
+              // L'appareil prend en charge le changement de l'orientation verrouillée
+              if (document.fullscreenElement !== null) {
+                screen.orientation.lock("landscape");
+              } else {
+                screen.orientation.lock("portrait");
+              }
+              screen.orientation.unlock();
+            } else {
+              // L'appareil ne prend pas en charge le changement de l'orientation verrouillée
+              console.log(
+                "L'appareil ne prend pas en charge le changement de l'orientation verrouillée."
+              );
+            }
+          });
+        });
+      } else {
+        console.log(
+          "L'appareil ne prend pas en charge l'API Orientation Events."
+        );
+      }
+    }
+    isMobile && touch_screen_controls();
+
     //! Play/pause
     const play_pause_svg = {
       play: '<use xlink:href="#play-icon-fill"></use>',
@@ -547,8 +984,9 @@ class OchoPlayer extends HTMLElement {
     video.addEventListener("pause", pause_video);
 
     // ! Volume
-
-    mute_btn.addEventListener("click", toggle_mute);
+    mute_btns.forEach((mute_btn) => {
+      mute_btn.addEventListener("click", toggle_mute);
+    });
     function toggle_mute() {
       if (video.volume !== 0) {
         localStorage.setItem("volume", video.volume);
@@ -560,12 +998,14 @@ class OchoPlayer extends HTMLElement {
       settings_btn.classList.contains("active") && remove_settings();
     }
     video.addEventListener("volumechange", volume_change);
-    volume_slider.addEventListener("change", () => {
-      volume_slide(volume_slider.value);
-    });
-    volume_slider.addEventListener("mousemove", () => {
-      volume_slide(volume_slider.value);
-    });
+    volume_slider &&
+      volume_slider.addEventListener("change", () => {
+        volume_slide(volume_slider.value);
+      });
+    volume_slider &&
+      volume_slider.addEventListener("mousemove", () => {
+        volume_slide(volume_slider.value);
+      });
     function volume_change() {
       let volume_svg = [
         '<use xlink:href="#volume-muted-icon"></use>',
@@ -573,12 +1013,14 @@ class OchoPlayer extends HTMLElement {
         '<use xlink:href="#volume-high-icon"></use>',
       ];
 
-      volume_slider.value = video.volume;
+      volume_slider && (volume_slider.value = video.volume);
       let video_volume = video.volume;
       // Détermine le niveau sonore en fonction des conditions
       video_volume = video_volume > 0.5 ? 2 : video_volume !== 0 ? 1 : 0;
       // Mettre à jour l'icône du bouton de sourdine en fonction du niveau sonore
-      mute_btn.querySelector("svg").innerHTML = volume_svg[video_volume];
+      mute_btns.forEach((mute_btn) => {
+        mute_btn.querySelector("svg").innerHTML = volume_svg[video_volume];
+      });
     }
 
     function volume_slide(level) {
@@ -730,7 +1172,7 @@ class OchoPlayer extends HTMLElement {
       video.autoplay
         ? auto_play.classList.add("active")
         : auto_play.classList.remove("active");
-      change_autoplay_btn(video.autoplay)
+      change_autoplay_btn(video.autoplay);
     }
     function change_autoplay_btn(state = false) {
       auto_play.querySelector("svg").innerHTML = state
@@ -754,10 +1196,10 @@ class OchoPlayer extends HTMLElement {
     }
 
     //! View modes
-    cinema_btn.addEventListener("click", toggle_cinema_mode);
+    cinema_btn && cinema_btn.addEventListener("click", toggle_cinema_mode);
     document.addEventListener("fullscreenchange", change_fullscreen);
     fullscreen_btn.addEventListener("click", toggle_fullscreen_mode);
-    pip_btn.addEventListener("click", toggle_pip);
+    pip_btn && pip_btn.addEventListener("click", toggle_pip);
 
     function toggle_cinema_mode() {
       const cinema_svg = {
