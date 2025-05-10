@@ -785,8 +785,8 @@ video::cue {
 
 @font-face {
   font-family: "Ocho";
-  src: url(fonts/icon.woff2) format("woff2"),
-    url(fonts/icon.ttf) format("truetype");
+  src: url(https://ochokom.github.io/ocho-video-player/fonts/icon.woff2) format("woff2"),
+    url(https://ochokom.github.io/ocho-video-player/fonts/icon.ttf) format("truetype");
 }
 @media (min-width: 400px){
     .settings-menu{
