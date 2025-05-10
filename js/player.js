@@ -800,6 +800,7 @@ class OchoPlayer extends HTMLElement {
       video.appendChild(track);
     });
     const stylesheet = isMobile ? "mobile-player.css" : "player.css";
+    console.log(location.pathname);
     const style_src =
       (location.hostname !== "ochokom.github.io" && location.pathname !== "/ocho-video-player/")
         ? `https://ochokom.github.io/ocho-video-player/${stylesheet}`
