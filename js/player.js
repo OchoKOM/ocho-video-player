@@ -800,11 +800,10 @@ class OchoPlayer extends HTMLElement {
       video.appendChild(track);
     });
     const stylesheet = isMobile ? "mobile-player.css" : "player.css";
-    console.log(location.pathname);
     const style_src =
-      (location.hostname !== "ochokom.github.io" && location.pathname !== "/ocho-video-player/")
-        ? `https://ochokom.github.io/ocho-video-player/${stylesheet}`
-        : `./${stylesheet}`;
+      (location.hostname === "ochokom.github.io" && location.pathname === "/ocho-video-player/")
+        ? `./${stylesheet}`
+        : `https://ochokom.github.io/ocho-video-player/${stylesheet}`;
     player.appendChild(container);
 
     // Ajouter le tout au Shadow DOM
@@ -1319,7 +1318,7 @@ class OchoPlayer extends HTMLElement {
         current_quality: video.getAttribute("size"),
         active:
           Number(video.getAttribute("size")) ===
-          Number(size.getAttribute("size"))
+            Number(size.getAttribute("size"))
             ? " active"
             : "",
         tagName: size.tagName.toLowerCase(),
@@ -1397,8 +1396,8 @@ class OchoPlayer extends HTMLElement {
         let lang = sessionStorage.getItem("lang")
           ? sessionStorage.getItem("lang")
           : document
-              .querySelectorAll("[data-track]")[1]
-              .getAttribute("data-track");
+            .querySelectorAll("[data-track]")[1]
+            .getAttribute("data-track");
         !subtitle_btn.classList.contains("active")
           ? select_captions(lang)
           : select_captions("Off");
