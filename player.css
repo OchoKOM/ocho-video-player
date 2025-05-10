@@ -16,6 +16,7 @@ ocho-player {
   margin: 0;
   box-sizing: border-box;
 }
+
 .ocho-player-container {
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
     Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
@@ -31,6 +32,7 @@ ocho-player {
   margin-inline: auto;
   transition: 150ms ease-in-out;
 }
+
 .ocho-player-container * {
   margin: 0;
   padding: 0;
@@ -51,10 +53,12 @@ ocho-player.cinema {
 .player.cinema {
   max-height: 80vh;
 }
+
 .ocho-player-container.fullscreen,
 .player.fullscreen {
   max-height: 100vh;
 }
+
 .light {
   position: absolute;
   margin: auto;
@@ -71,6 +75,7 @@ ocho-player.cinema {
   transition: 0.5s;
   z-index: -1;
 }
+
 .ocho-player-container video {
   width: 100%;
   border-radius: inherit;
@@ -533,7 +538,7 @@ video::cue {
 }
 
 .settings-menu ul li,
-.settings-menu ul li > label {
+.settings-menu ul li>label {
   position: relative;
   display: flex;
   align-items: center;
@@ -545,7 +550,7 @@ video::cue {
   cursor: pointer;
 }
 
-.settings-menu ul li > label {
+.settings-menu ul li>label {
   font-size: 1em;
   padding: 0;
 }
@@ -575,7 +580,7 @@ video::cue {
 }
 
 /* Input */
-.cl-switch > input {
+.cl-switch>input {
   appearance: none;
   -moz-appearance: none;
   -webkit-appearance: none;
@@ -584,7 +589,7 @@ video::cue {
 }
 
 /* Track */
-.cl-switch > span::before {
+.cl-switch>span::before {
   content: "";
   display: inline-block;
   margin: 0.24rem 0;
@@ -596,7 +601,7 @@ video::cue {
 }
 
 /* Thumb */
-.cl-switch > span::after {
+.cl-switch>span::after {
   content: "";
   position: absolute;
   top: 0.125rem;
@@ -611,16 +616,16 @@ video::cue {
 }
 
 /* Checked */
-.cl-switch > input:checked + span::before {
+.cl-switch>input:checked+span::before {
   background-color: #73b4f5c2;
 }
 
-.cl-switch > input:checked + span::after {
+.cl-switch>input:checked+span::after {
   background-color: #1e90ff;
   transform: translateX(1rem);
 }
 
-.cl-switch > input:checked:active + span::before {
+.cl-switch>input:checked:active+span::before {
   background-color: #73b4f5c2;
 }
 
@@ -676,16 +681,19 @@ video::cue {
   overflow: hidden;
   outline: 5px solid #1e90ff66;
 }
+
 .info-drop .channel-profile img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 .info-drop .user-btns {
   display: flex;
   flex-wrap: wrap;
   gap: 1rem;
 }
+
 .info-drop .user-btn {
   position: relative;
   display: flex;
@@ -700,19 +708,24 @@ video::cue {
   cursor: pointer;
   color: #f4faff;
 }
+
 .user-btn.portfolio {
   background: #f4faff;
   color: #06acfb;
 }
+
 .user-btn.youtube {
   background: #f03;
 }
+
 .user-btn.github {
   background: #24292f;
 }
+
 .user-btn.facebook {
   background: #0266ff;
 }
+
 .user-btn .icon {
   width: 70%;
   height: 70%;
@@ -720,13 +733,16 @@ video::cue {
   top: 0;
   left: 0;
 }
+
 .user-btn .icon svg {
   width: 100%;
   height: 100%;
 }
+
 .user-btn .text {
   transition: 150ms ease-in-out;
 }
+
 .user-btn:not(:hover) .text {
   visibility: hidden;
   width: 0;
@@ -734,6 +750,7 @@ video::cue {
   overflow: hidden;
   position: absolute;
 }
+
 .info-drop .user-btn:hover {
   border-radius: 2rem;
   width: 7rem;
@@ -745,6 +762,8 @@ video::cue {
   font-family: "ocho-font";
   src: url(https://ochokom.github.io/ocho-video-player/fonts/icon.woff2) format("woff2"),
     url(https://ochokom.github.io/ocho-video-player/fonts/icon.ttf) format("truetype");
+  src: url(fonts/icon.woff2) format("woff2"),
+    url(fonts/icon.ttf) format("truetype");
 }
 
 @media (max-width: 400px) {
@@ -760,11 +779,13 @@ video::cue {
   .video-controls-container .settings-menu .desktop-item {
     display: none;
   }
+
   .ocho-player-container .settings-menu {
     inset: auto;
     right: 0;
     top: -3rem;
   }
+
   .ocho-player-container.fullscreen .settings-menu {
     top: initial;
     bottom: 150%;
