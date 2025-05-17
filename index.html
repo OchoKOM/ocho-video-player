@@ -300,10 +300,11 @@
 
         allCodeBlocs.forEach(codeBloc => {
             const copyButton = document.createElement('button');
+            const codeContent = codeBloc.textContent;
             copyButton.classList.add("copy-button");
             copyButton.textContent = 'Copier';
             copyButton.addEventListener('click', () => {
-                navigator.clipboard.writeText(codeBloc.textContent).then(
+                navigator.clipboard.writeText(codeContent).then(
                     () => {
                         copyButton.textContent = 'Copié';
                         setTimeout(() => {
